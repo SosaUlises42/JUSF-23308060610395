@@ -3,7 +3,7 @@ import flet as ft
 def main(page: ft.Page):
     page.title = "Registro de Eventos"
     page.horizontal_alignment = "CENTER"
-    page.bgcolor = "#0f0f1b"
+    page.bgcolor = "#0B1440"
     
     titulo = ft.Text(
         value="Agenda Digital",
@@ -53,6 +53,27 @@ def main(page: ft.Page):
         ]
     )
     
+    mod = ft.Text(
+        value="Modalidad",
+        size=20,
+        color=ft.Colors.WHITE,
+        italic=False,
+        text_align=ft.TextAlign.CENTER,
+        max_lines=2,
+        overflow=ft.TextOverflow.ELLIPSIS
+    )
+    
+    mod2 = ft.RadioGroup(
+        content=ft.Column([
+            ft.Radio(value="Presencial", label="Presencial", label_style = ft.TextStyle(color = "white")),
+            ft.Radio(value="Virtual", label="Virtual", label_style = ft.TextStyle(color = "white")),
+        ],
+        horizontal_alignment = ft.CrossAxisAlignment.CENTER,
+        expand=True),
+        value="Presencial",
+        on_change=lambda e: print(f"Seleccionado: {e.control.value}")
+    )
+    
     pregunta = ft.Text(
         value="Requiere Inscripcion Previa",
         size=20,
@@ -65,12 +86,31 @@ def main(page: ft.Page):
     
     grupo = ft.RadioGroup(
         content=ft.Column([
-            ft.Radio(value="Si", label="Si"),
-            ft.Radio(value="No", label="No"),
+            ft.Radio(value="Si", label="Si", label_style = ft.TextStyle(color = "white")),
+            ft.Radio(value="No", label="No", label_style = ft.TextStyle(color = "white")),
         ],
         horizontal_alignment = ft.CrossAxisAlignment.CENTER,
         expand=True),
         value="No",
+        on_change=lambda e: print(f"Seleccionado: {e.control.value}")
+    )
+    
+    duracion = ft.Text(
+        value="Duracion del evento (En horas)",
+        size=20,
+        color=ft.Colors.WHITE,
+        italic=False,
+        text_align=ft.TextAlign.CENTER,
+        max_lines=2,
+        overflow=ft.TextOverflow.ELLIPSIS
+    )
+    
+    slider = ft.Slider(
+        min=0,
+        max=8,
+        divisions=8,
+        value=1,
+        label="{value}",
         on_change=lambda e: print(f"Seleccionado: {e.control.value}")
     )
 
@@ -80,12 +120,17 @@ def main(page: ft.Page):
                 subtitle,
                 eventtoN,
                 select,
+                mod,
+                mod2,
                 pregunta,
-                grupo
+                grupo,
+                duracion,
+                slider
             ],
-            expand=True),
+            expand=True,
+            alignment=ft.MainAxisAlignment.CENTER),
             ft.Column([ft.Image(
-                src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/377055240/original/263612bb28d57c90594c01833617f9b14df09ea4/develop-ai-agent-llama3-openai-sora-whisper-ai-bot-text-to-speech-ai-model.jpeg",
+                src="https://pixelz.cc/wp-content/uploads/2023/12/open-ai-chat-gpt-logo-uhd-4k-wallpaper.jpg",
                 width=800,
                 height=500,
                 border_radius=ft.BorderRadius.all(10),
