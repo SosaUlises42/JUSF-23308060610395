@@ -3,7 +3,8 @@ import flet as ft
 def main(page: ft.Page):
     page.title = "Registro de Eventos"
     page.horizontal_alignment = "CENTER"
-    page.bgcolor = "#0B1440"
+    page.bgcolor = "#101416"
+    page.scroll = "auto"
     
     titulo = ft.Text(
         value="Agenda Digital",
@@ -36,9 +37,7 @@ def main(page: ft.Page):
         max_length=50,
         color=ft.Colors.WHITE,
         bgcolor=ft.Colors.WHITE_10,
-        border_color=ft.Colors.WHITE,
-        on_change=lambda e: print(e.control.value),
-        on_submit=lambda e: print("Enter presionado")
+        border_color=ft.Colors.WHITE
     )
 
     select = ft.Dropdown(
@@ -70,8 +69,7 @@ def main(page: ft.Page):
         ],
         horizontal_alignment = ft.CrossAxisAlignment.CENTER,
         expand=True),
-        value="Presencial",
-        on_change=lambda e: print(f"Seleccionado: {e.control.value}")
+        value="Presencial"
     )
     
     pregunta = ft.Text(
@@ -91,8 +89,7 @@ def main(page: ft.Page):
         ],
         horizontal_alignment = ft.CrossAxisAlignment.CENTER,
         expand=True),
-        value="No",
-        on_change=lambda e: print(f"Seleccionado: {e.control.value}")
+        value="No"
     )
     
     duracion = ft.Text(
@@ -110,8 +107,7 @@ def main(page: ft.Page):
         max=8,
         divisions=8,
         value=1,
-        label="{value}",
-        on_change=lambda e: print(f"Seleccionado: {e.control.value}")
+        label="{value}"
     )
 
     reg = ft.Row(
@@ -130,7 +126,7 @@ def main(page: ft.Page):
             expand=True,
             alignment=ft.MainAxisAlignment.CENTER),
             ft.Column([ft.Image(
-                src="https://pixelz.cc/wp-content/uploads/2023/12/open-ai-chat-gpt-logo-uhd-4k-wallpaper.jpg",
+                src="https://hypeinsight.com/wp-content/uploads/2023/04/How-to-get-the-very-best-results-and-usage-out-of-GPT-4-by-OpenAI-.png",
                 width=800,
                 height=500,
                 border_radius=ft.BorderRadius.all(10),
@@ -157,13 +153,51 @@ def main(page: ft.Page):
         overflow=ft.TextOverflow.ELLIPSIS
     )
 
+    def mostrar_resumen():
+        if eventtoN.value.strip() != "":
+            resumen.value = (
+                f"Nombre: {eventtoN.value}\n"
+                f"Modalidad: {mod.value}\n"
+                f"Requiere inscripción: {'Sí' if grupo.value else 'No'}\n"
+                f"Duración: {int(slider.value)} horas"
+            )
+        page.update()
+
+    boton = ft.Button(
+        content=ft.Text("Mostrar resumen", color=ft.Colors.BLACK),
+        bgcolor=ft.Colors.WHITE,
+        on_click=mostrar_resumen
+    )
+
+    resumen = ft.Text(
+        value="",
+        size=16,
+        weight=ft.FontWeight.W_500,
+        color=ft.Colors.WHITE,
+    )
+
+    reg2 = ft.Row(
+        controls=[
+            ft.Column([boton],
+            width = 800,
+            alignment=ft.MainAxisAlignment.START),
+            ft.Column([resumen],
+            expand = True,
+            alignment=ft.MainAxisAlignment.END)
+        ],
+        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+        spacing=10,
+        wrap=False
+    )
+
     
     page.add(
         titulo,
         div,
         reg,
         div2,
-        subtitle2
+        subtitle2, 
+        reg2
     )
 
 
